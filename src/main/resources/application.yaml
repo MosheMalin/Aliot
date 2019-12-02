@@ -1,0 +1,12 @@
+spring:
+   application:
+      name: demoservice
+server:
+    port: 9091
+logging:
+    level:
+        root: INFO
+        org.springframework.web: DEBUG
+    file: logs/demo.log
+
+     
