@@ -1,7 +1,6 @@
 package org.mm.thoracalling;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -23,7 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import org.hamcrest.Matchers.*;
 
 
 @RunWith(SpringRunner.class)
@@ -58,7 +56,7 @@ public class PrayersControllerTests {
   }
 
   @Test
-  public void whenThereIs2Users_shoudlReturn2Users() throws Exception {
+  public void whenThereAre2Users_shoudlReturn2Users() throws Exception {
       
     List<Prayer> retPrayers = new ArrayList<>();
     retPrayers.add(new Prayer("a","א"));

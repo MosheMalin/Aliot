@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
-
 @Service
 class PrayerService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
