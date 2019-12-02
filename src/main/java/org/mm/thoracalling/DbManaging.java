@@ -1,5 +1,7 @@
 package org.mm.thoracalling;
 
+import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,10 +15,15 @@ class DbManaging {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Bean
-    CommandLineRunner initDb (PrayerRepository prayerRepository){
+    CommandLineRunner initDb (PrayerRepository prayerRepository, 
+                              PrayerImportantDatesRepository prayerImportantDatesRepository){
         return args -> {
             logger.info("Preloading: " + prayerRepository.save(new Prayer("MosheMalin","משה מלין")));
             logger.info("Preloading: " + prayerRepository.save(new Prayer("NissimDerdiger","ניסים דרדיגר")));
+
+            logger.info("Preloading: " + prayerImportantDatesRepository.save(
+                 new PrayerImportantDates ("MosheMalin",LocalDate.parse("1991-08-16"), ImportantDatesTypes.BARMIZVA)));
+
         };
     }
 
