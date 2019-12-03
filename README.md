@@ -1,4 +1,4 @@
-# Aliot
+# Aliyot
 
 This project shoudl help Gabbay to get list of sugested Olim for the next Shabbat.
 
