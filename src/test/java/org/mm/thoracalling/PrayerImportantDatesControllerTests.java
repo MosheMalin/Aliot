@@ -1,5 +1,6 @@
 package org.mm.thoracalling;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -86,6 +87,20 @@ public class PrayerImportantDatesControllerTests {
         .andExpect(status().isNotFound())
         .andExpect(content().string("Prayer not found"));
     }    
+
+    @Test
+    public void whenProvidingExistingName_getPrayerImportantDatesByName() throws Exception {
+        List<PrayerImportantDates> retPrayerImportantDates = new ArrayList<>();
+        retPrayerImportantDates.add(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        retPrayerImportantDates.add(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        when(prayerImportantDatesService.getListByEnglishName(anyString())).thenReturn(retPrayerImportantDates.subList(1, 2));
+        mockMvc.perform(get("/prayersImportantDates/name/bbb"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$",org.hamcrest.Matchers.hasSize (1)))
+        .andExpect(jsonPath("$[0].englishName", org.hamcrest.Matchers.equalTo("bbb")))
+        .andExpect(jsonPath("$[0].date", org.hamcrest.Matchers.equalTo("2018-02-13")));
+    }        
     /*
     @Test
     public void getPrayerNotFound_whenAskingForNotExistingId() throws Exception {

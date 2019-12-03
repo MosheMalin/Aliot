@@ -33,7 +33,7 @@ public class PrayerImportantDatesServiceTests{
     }
 
     @Test
-    public void whenAskingForPrayersInGivenImportantDate_returnListOfAllPrayersWithThisDate(){
+    public void whenAskingForImportantDateByDaye_returnListOfAllPrayersWithThisDate(){
         prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
         prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
         List<PrayerImportantDates> prayerImportantDates = prayerImportantDatesService.getListByDate(LocalDate.parse("2017-02-13"));
@@ -41,4 +41,12 @@ public class PrayerImportantDatesServiceTests{
         assertThat(prayerImportantDates.get(0).getEnglishName().contentEquals("aaa"));
     }
 
+    @Test
+    public void whenAskingForImportantDateByName_returnListOfAllPrayersWithThisName(){
+        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        List<PrayerImportantDates> prayerImportantDates = prayerImportantDatesService.getListByEnglishName("bbb");
+        assertThat(prayerImportantDates.size()).isEqualTo(1);
+        assertThat(prayerImportantDates.get(0).getEnglishName().contentEquals("bbb"));
+    }    
 }
