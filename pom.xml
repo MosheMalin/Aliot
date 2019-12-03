@@ -59,6 +59,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>net.sf.hebcal</groupId>
+			<artifactId>hebcalJ</artifactId>
+  			<packaging>jar</packaging>
+			<version>0.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>

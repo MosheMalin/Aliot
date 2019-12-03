@@ -9,3 +9,4 @@ target/test-classes/*
 .settings/org.eclipse.m2e.core.prefs
 .vscode/launch.json
 logs/*
+.vscode/settings.json
