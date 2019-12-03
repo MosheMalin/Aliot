@@ -26,7 +26,7 @@ class PrayerImportantDatesService {
         return prayerImportantDatesRepository.findById(id);
     }
 
-    List<PrayerImportantDates> getPrayerByEnglishName(String englishName)
+    List<PrayerImportantDates> getListByEnglishName(String englishName)
     {
         List<PrayerImportantDates> res = prayerImportantDatesRepository.findByEnglishName(englishName);
         if (res.size() >1)
@@ -35,7 +35,7 @@ class PrayerImportantDatesService {
         }
         return res;
     }
-    List<PrayerImportantDates> getPrayerByDate(LocalDate date)
+    List<PrayerImportantDates> getListByDate(LocalDate date)
     {
         List<PrayerImportantDates> res = prayerImportantDatesRepository.findByDate(date);
         if (res.size() >1)

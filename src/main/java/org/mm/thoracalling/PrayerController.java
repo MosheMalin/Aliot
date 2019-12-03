@@ -1,6 +1,9 @@
 package org.mm.thoracalling;
 
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +35,10 @@ class PrayerController{
     @GetMapping("/prayers/name/{englishName}")
     List<Prayer> getByEnglishName (@PathVariable String englishName){
         List<Prayer> res = prayerService.getPrayerByEnglishName(englishName);
-        if (res.size()>0){
-            return res;
-        }
-        else{
+        if (res==null || res.isEmpty()){
             throw new PrayerNotFoundException(englishName);
         }
-
+        return res;
     }
 
     @GetMapping("/prayers/{id}")

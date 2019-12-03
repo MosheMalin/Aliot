@@ -19,21 +19,29 @@ public class HebCalendarUtilsTests{
 
     @Test
     public void getParashah() throws HebrewDateException {
-        JewishHolidaysCalendar jhc  = new JewishHolidaysCalendar(12, 7, 2019, HebrewDate.DEFAULT_ENGLISH_LOCALE);
-        assertThat(jhc.getShabbatParsha().getLocalizedString()).isEqualTo("Vayetzei");
+        JewishHolidaysCalendar jhc  = new JewishHolidaysCalendar(1, 4, 2020, HebrewDate.DEFAULT_ENGLISH_LOCALE);
+        assertThat(jhc.getShabbatParsha().getLocalizedString()).isEqualTo("Vayigash");
 
     }
 
     //will check particular week - 1.12.2019 through 7.12.2019. 
     @Test
     public void getSameAndCorrectParasha_giveAnyOfWeekDays_BasedOnConcreteDate() throws HebrewDateException{
-
         int startWeekDate = 1;
-        LocalDate localDate = LocalDate.of(2019, Month.DECEMBER, 1);
-        assertThat(HebCalendarUtil.getNextParasha(localDate)).isEqualTo("Vayetzei");
-
-
+        for (int i=0; i<7;i++){
+            LocalDate localDate = LocalDate.of(2019, Month.DECEMBER, startWeekDate+i);
+            assertThat(HebCalendarUtil.getNextParasha(localDate)).isEqualTo("Vayetzei");
+        }
     }
 
+    //will check particular week - 29.12.2019 through 4.1.2019. 
+    @Test
+    public void givenWeekCrossingYear_verifyCorrectParasha() throws HebrewDateException{
+        int startWeekDate = 29;
+        LocalDate localDate = LocalDate.of(2019, Month.DECEMBER, startWeekDate);
+        for (int i=0; i<7;i++){
+            assertThat(HebCalendarUtil.getNextParasha(localDate.plusDays(i))).isEqualTo("Vayigash");
+        }
+    }
 
 }

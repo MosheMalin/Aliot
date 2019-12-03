@@ -70,7 +70,7 @@ public class PrayersControllerTests {
     }
 
     @Test
-    public void getPrayerById_whenProvidingValidId() throws Exception {
+    public void whenProvidingValidId_getPrayerById() throws Exception {
         Optional<Prayer> aPrayer = Optional.of(new Prayer(1L, "a","א"));
         when(prayerService.getById(1L)).thenReturn(aPrayer);
 
@@ -81,7 +81,7 @@ public class PrayersControllerTests {
     }
 
     @Test
-    public void getPrayerNotFound_whenAskingForNotExistingId() throws Exception {
+    public void whenAskingForNotExistingId_getPrayerNotFound() throws Exception {
         when(prayerService.getById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/prayers/1"))
@@ -90,7 +90,7 @@ public class PrayersControllerTests {
     }
 
     @Test
-    public void getPrayerByEnglishName_whenProvidingValidName() throws Exception {
+    public void whenProvidingValidName_getPrayerByEnglishName() throws Exception {
         List<Prayer> retPrayers = new ArrayList<>();
         retPrayers.add(new Prayer("a","א"));
         when(prayerService.getPrayerByEnglishName(anyString())).thenReturn(retPrayers);
@@ -104,13 +104,18 @@ public class PrayersControllerTests {
     //todo: list with same name
 
     @Test
-    public void getPrayerNotFound_whenNameDoesNotExist() throws Exception {
+    public void whenNameDoesNotExist_get404() throws Exception {
         List<Prayer> retPrayers = new ArrayList<>();
-        when(prayerService.getPrayerByEnglishName(anyString())).thenReturn(retPrayers);
-    
+        when(prayerService.getPrayerByEnglishName(anyString())).thenReturn(retPrayers);   
         mockMvc.perform(get("/prayers/name/Moshe"))
         .andExpect(status().isNotFound())
         .andExpect(content().string("Prayer not found"));
+
+        when(prayerService.getPrayerByEnglishName(anyString())).thenReturn(null);   
+        mockMvc.perform(get("/prayers/name/Moshe"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Prayer not found"));
+
     }
 
 }
