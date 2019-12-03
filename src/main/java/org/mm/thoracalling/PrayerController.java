@@ -2,8 +2,6 @@ package org.mm.thoracalling;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
