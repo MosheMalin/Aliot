@@ -8,5 +8,9 @@ logging:
         root: INFO
         org.springframework.web: DEBUG
     file: logs/demo.log
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
      
