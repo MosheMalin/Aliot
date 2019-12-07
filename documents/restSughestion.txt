@@ -1,0 +1,54 @@
+get: /prayers
+	list of all prayers info
+
+get: /paryaers/{id}
+	name
+	list of sepcial prashot
+	list of hebrew dates
+	list of history of Aliyot
+	
+get: /prayers/{id}/aliyot
+	name
+	list of history of aliyot (by shabbat\events)
+	
+get: /prayers/{id}/parasha
+	name
+	list of prashot this year?
+
+post: /prayers
+	new prayer with:
+	name
+	Hebrew dates
+	Parashot
+	Aliyot
+
+
+patch: /Prayers/{id}/
+	update name
+	
+post: /Prayers/{id}/parashot
+	add list of parashot
+
+post: /Prayers/{id}/dates
+	add list of dates
+	
+post: /Prayers/{id}/Aliyot
+	add list of Aliyot
+
+delete: /Prayers/{id}
+	delete a prayer
+
+delete: /prayers/{id}/Aliyot/{year}/{event}
+	
+get: /parasha/{year}/history
+	list of olim of the parasha
+get: /parasha/next
+	list of olim for the next parasha
+
+improving /parasha:	
+get: /event/{year}/history
+	list of olim of the event (parasha/chag)	
+get: /event/next
+	list of olim for the next event
+	
+
