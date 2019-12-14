@@ -2,7 +2,9 @@ package org.mm.thoracalling.utils;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import net.sf.hebcal.*;
 
@@ -23,4 +25,26 @@ public class HebCalendarUtil{
         JewishHolidaysCalendar jhc  = new JewishHolidaysCalendar(commingShabatAsDate, HebrewDate.DEFAULT_ENGLISH_LOCALE);
         return jhc.getShabbatParsha().getLocalizedString();
     }
+
+	private static final String[] parshiotKeys = { "Bereshit", "Noach",
+			"LechLecha", "Vayera", "ChayeiSara", "Toldot", "Vayetzei",
+			"Vayishlach", "Vayeshev", "Miketz", "Vayigash", "Vayechi",
+			"Shemot", "Vaera", "Bo", "Beshalach", "Yitro", "Mishpatim",
+			"Terumah", "Tetzaveh", "KiTisa", "Vayakhel", "Pekudei", "Vayikra",
+			"Tzav", "Shmini", "Tazria", "Metzora", "AchreiMot", "Kedoshim",
+			"Emor", "Behar", "Bechukotai", "Bamidbar", "Nasso", "Behaalotcha",
+			"Shlach", "Korach", "Chukat", "Balak", "Pinchas", "Matot", "Masei",
+			"Devarim", "Vaetchanan", "Eikev", "Reeh", "Shoftim", "KiTeitzei",
+			"KiTavo", "Nitzavim", "Vayeilech", "Haazinu",
+
+			"VayakhelPekudei", "TazriaMetzora", "AchreiMotKedoshim",
+			"BeharBechukotai", "ChukatBalak", "MatotMasei",
+			"NitzavimVayeilech", };    
+
+    private static List<String> parashot  = Arrays.asList(parshiotKeys);
+
+    private static List<String> getParshot(){
+        return parashot;
+    }
+
 }

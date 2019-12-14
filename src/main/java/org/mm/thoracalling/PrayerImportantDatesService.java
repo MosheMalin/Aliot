@@ -35,13 +35,9 @@ class PrayerImportantDatesService {
         }
         return res;
     }
-    List<PrayerImportantDates> getListByDate(LocalDate date)
-    {
-        List<PrayerImportantDates> res = prayerImportantDatesRepository.findByDate(date);
-        if (res.size() >1)
-        {
-            logger.warn("multiple results with the same name [" + date + "].");;
-        }
-        return res;
-    }    
+
+    List<PrayerImportantDates> getListByHebDate(int hebMonth, int dayInMonth) {
+        return prayerImportantDatesRepository.findByHebrewMonthAndDayInMonth(hebMonth, dayInMonth);
+    }
+
 }

@@ -1,6 +1,5 @@
 package org.mm.thoracalling;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +25,31 @@ public class PrayerImportantDatesServiceTests{
 
     @Test
     public void whenAskingForAllPrayersImportantDates_getFullList(){
-        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",1,1, ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",2,12, ImportantDatesTypes.YAHRZEIHT));
         List<PrayerImportantDates> prayerImportantDates = prayerImportantDatesService.getAll();
         assertThat(prayerImportantDates.size()).isEqualTo(2);
     }
 
     @Test
-    public void whenAskingForImportantDateByDaye_returnListOfAllPrayersWithThisDate(){
-        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        List<PrayerImportantDates> prayerImportantDates = prayerImportantDatesService.getListByDate(LocalDate.parse("2017-02-13"));
-        assertThat(prayerImportantDates.size()).isEqualTo(1);
-        assertThat(prayerImportantDates.get(0).getEnglishName().contentEquals("aaa"));
-    }
-
-    @Test
     public void whenAskingForImportantDateByName_returnListOfAllPrayersWithThisName(){
-        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",1, 3, ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",2, 12, ImportantDatesTypes.YAHRZEIHT));
         List<PrayerImportantDates> prayerImportantDates = prayerImportantDatesService.getListByEnglishName("bbb");
         assertThat(prayerImportantDates.size()).isEqualTo(1);
         assertThat(prayerImportantDates.get(0).getEnglishName().contentEquals("bbb"));
     }    
+
+    @Test
+    public void whenQueringByHebDate_getAllItemsInThisDate(){
+        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",1, 3, ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("aaa",2, 2, ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",5, 3, ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("bbb",2, 12, ImportantDatesTypes.YAHRZEIHT));
+        prayerImportantDatesRepository.save(new PrayerImportantDates("ccc",1, 3, ImportantDatesTypes.YAHRZEIHT));
+        List<PrayerImportantDates> prayerImportantDates = prayerImportantDatesService.getListByHebDate(1,3);
+        assertThat(prayerImportantDates.size()).isEqualTo(2);
+        assertThat(prayerImportantDates.get(0).getEnglishName().contentEquals("aaa"));
+        assertThat(prayerImportantDates.get(1).getEnglishName().contentEquals("ccc"));                        
+    }
 }

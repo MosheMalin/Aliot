@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,8 +39,8 @@ public class PrayerImportantDatesControllerTests {
   public void whenThereIsAListOfDates_shoudlReturnAll() throws Exception {
       
     List<PrayerImportantDates> retPrayerImportantDates = new ArrayList<>();
-    retPrayerImportantDates.add(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-    retPrayerImportantDates.add(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
+    retPrayerImportantDates.add(new PrayerImportantDates("aaa",1, 5, ImportantDatesTypes.YAHRZEIHT));
+    retPrayerImportantDates.add(new PrayerImportantDates("bbb",2, 12, ImportantDatesTypes.YAHRZEIHT));
     when(prayerImportantDatesService.getAll()).thenReturn(retPrayerImportantDates);
 
     mockMvc.perform(get("/prayersImportantDates"))
@@ -53,37 +52,40 @@ public class PrayerImportantDatesControllerTests {
     @Test
     public void whenProvidingValidId_getPrayerImportantDatesById() throws Exception {
         Optional<PrayerImportantDates> retPrayerImportantDates = 
-                Optional.of(new PrayerImportantDates(1L, "aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
+                Optional.of(new PrayerImportantDates(1L, "aaa",1, 5, ImportantDatesTypes.YAHRZEIHT));
         when(prayerImportantDatesService.getById(1L)).thenReturn(retPrayerImportantDates);
 
-        mockMvc.perform(get("/prayersImportantDates/1"))
+        mockMvc.perform(get("/prayersImportantDates/id/1"))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.englishName", org.hamcrest.Matchers.equalTo("aaa")))
-        .andExpect(jsonPath("$.date", org.hamcrest.Matchers.equalTo("2017-02-13")));
+        .andExpect(jsonPath("$.hebrewMonth", org.hamcrest.Matchers.equalTo(1)))
+        .andExpect(jsonPath("$.dayInMonth", org.hamcrest.Matchers.equalTo(5)));
     }
+    
     
     @Test
     public void whenProvidingExistingDate_getPrayerImportantDatesByDate() throws Exception {
         List<PrayerImportantDates> retPrayerImportantDates = new ArrayList<>();
-        retPrayerImportantDates.add(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        retPrayerImportantDates.add(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        when(prayerImportantDatesService.getListByDate(LocalDate.parse("2017-02-13"))).thenReturn(retPrayerImportantDates.subList(0, 1));
-        mockMvc.perform(get("/prayersImportantDates/date/2017-02-13"))
+        retPrayerImportantDates.add(new PrayerImportantDates("aaa",1, 5, ImportantDatesTypes.YAHRZEIHT));
+        retPrayerImportantDates.add(new PrayerImportantDates("bbb",2, 12, ImportantDatesTypes.YAHRZEIHT));
+        when(prayerImportantDatesService.getListByHebDate(1, 5)).thenReturn(retPrayerImportantDates.subList(0, 1));
+        mockMvc.perform(get("/prayersImportantDates/dates?hebMonth=1&dayInMonth=5"))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$",org.hamcrest.Matchers.hasSize (1)))
         .andExpect(jsonPath("$[0].englishName", org.hamcrest.Matchers.equalTo("aaa")))
-        .andExpect(jsonPath("$[0].date", org.hamcrest.Matchers.equalTo("2017-02-13")));
+        .andExpect(jsonPath("$[0].hebrewMonth", org.hamcrest.Matchers.equalTo(1)))
+        .andExpect(jsonPath("$[0].dayInMonth", org.hamcrest.Matchers.equalTo(5)));
     }    
 
     @Test
     public void whenProvidingNonExistingDate_get404() throws Exception {
         List<PrayerImportantDates> retPrayerImportantDates = new ArrayList<>();
-        retPrayerImportantDates.add(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        retPrayerImportantDates.add(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        when(prayerImportantDatesService.getListByDate(LocalDate.parse("2017-02-13"))).thenReturn(null);
-        mockMvc.perform(get("/prayersImportantDates/date/2017-02-13"))
+        retPrayerImportantDates.add(new PrayerImportantDates("aaa",1, 5, ImportantDatesTypes.YAHRZEIHT));
+        retPrayerImportantDates.add(new PrayerImportantDates("bbb",2, 12, ImportantDatesTypes.YAHRZEIHT));
+        when(prayerImportantDatesService.getListByHebDate(1, 5)).thenReturn(null);
+        mockMvc.perform(get("/prayersImportantDates/dates?hebMonth=1&dayInMonth=5"))
         .andExpect(status().isNotFound())
         .andExpect(content().string("Prayer not found"));
     }    
@@ -91,15 +93,16 @@ public class PrayerImportantDatesControllerTests {
     @Test
     public void whenProvidingExistingName_getPrayerImportantDatesByName() throws Exception {
         List<PrayerImportantDates> retPrayerImportantDates = new ArrayList<>();
-        retPrayerImportantDates.add(new PrayerImportantDates("aaa",LocalDate.parse("2017-02-13"), ImportantDatesTypes.YAHRZEIHT));
-        retPrayerImportantDates.add(new PrayerImportantDates("bbb",LocalDate.parse("2018-02-13"), ImportantDatesTypes.YAHRZEIHT));
+        retPrayerImportantDates.add(new PrayerImportantDates("aaa",1, 5, ImportantDatesTypes.YAHRZEIHT));
+        retPrayerImportantDates.add(new PrayerImportantDates("bbb",2, 12, ImportantDatesTypes.YAHRZEIHT));
         when(prayerImportantDatesService.getListByEnglishName(anyString())).thenReturn(retPrayerImportantDates.subList(1, 2));
         mockMvc.perform(get("/prayersImportantDates/name/bbb"))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$",org.hamcrest.Matchers.hasSize (1)))
         .andExpect(jsonPath("$[0].englishName", org.hamcrest.Matchers.equalTo("bbb")))
-        .andExpect(jsonPath("$[0].date", org.hamcrest.Matchers.equalTo("2018-02-13")));
+        .andExpect(jsonPath("$[0].hebrewMonth", org.hamcrest.Matchers.equalTo(2)))
+        .andExpect(jsonPath("$[0].dayInMonth", org.hamcrest.Matchers.equalTo(12)));
     }        
     /*
     @Test

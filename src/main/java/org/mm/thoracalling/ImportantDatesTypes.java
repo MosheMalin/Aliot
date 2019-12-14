@@ -1,5 +1,5 @@
 package org.mm.thoracalling;
 
 public enum ImportantDatesTypes {
-    YAHRZEIHT, BARMIZVA, MARRIAGE, OTHER;
+    YAHRZEIHT, OTHER;
 }

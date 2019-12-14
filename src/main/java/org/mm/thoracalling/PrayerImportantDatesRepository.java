@@ -1,6 +1,5 @@
 package org.mm.thoracalling;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Repository;
 interface PrayerImportantDatesRepository extends JpaRepository<PrayerImportantDates,Long>{
     List<PrayerImportantDates> findByEnglishName (String englishName);
     Optional<PrayerImportantDates> findById(Long id);
-    List<PrayerImportantDates> findByDate (LocalDate date);
+    List<PrayerImportantDates> findByHebrewMonth (int hebrewMonth);
+    List<PrayerImportantDates> findByHebrewMonthAndDayInMonth (int hebrewMonth, int dayInMonth);
 }
 

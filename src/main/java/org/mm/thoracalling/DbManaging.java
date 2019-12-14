@@ -1,7 +1,5 @@
 package org.mm.thoracalling;
 
-import java.time.LocalDate;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +20,7 @@ class DbManaging {
             logger.info("Preloading: " + prayerRepository.save(new Prayer("NissimDerdiger","ניסים דרדיגר")));
 
             logger.info("Preloading: " + prayerImportantDatesRepository.save(
-                 new PrayerImportantDates ("MosheMalin",LocalDate.parse("1991-08-16"), ImportantDatesTypes.BARMIZVA)));
+                 new PrayerImportantDates ("MosheMalin",10, 13, ImportantDatesTypes.YAHRZEIHT)));
 
         };
     }

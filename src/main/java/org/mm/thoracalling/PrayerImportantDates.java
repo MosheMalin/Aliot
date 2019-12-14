@@ -2,17 +2,17 @@ package org.mm.thoracalling;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity
+@Table (name="important_dates_per_prayer")
 class PrayerImportantDates{
 
     private @Id @GeneratedValue 
@@ -22,22 +22,26 @@ class PrayerImportantDates{
     private String englishName;
 
     @Column(nullable = false)
-    private LocalDate date;
+    @Enumerated(EnumType.ORDINAL)
+    private ImportantDatesTypes dateType;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    ImportantDatesTypes dateType;
+    private int hebrewMonth;
+
+    @Column(nullable = false)
+    private int dayInMonth;
 
     PrayerImportantDates(){}
 
-    PrayerImportantDates (String englishName, LocalDate date, ImportantDatesTypes dateType){
+    PrayerImportantDates (String englishName, int hebrewMonth, int dayInMonth, ImportantDatesTypes dateType){
         this.englishName = englishName;
-        this.date = date;
+        this.hebrewMonth = hebrewMonth;
+        this.dayInMonth = dayInMonth;
         this.dateType = dateType;
     }
 
-    PrayerImportantDates (Long id, String englishName, LocalDate date, ImportantDatesTypes dateType){
-        this(englishName, date, dateType);
+    PrayerImportantDates (Long id, String englishName, int hebrewMonth, int dayInMonth, ImportantDatesTypes dateType){
+        this(englishName, hebrewMonth, dayInMonth, dateType);
         this.id = id;
     }
 
