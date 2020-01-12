@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Data
 @Entity
@@ -26,9 +28,13 @@ class PrayerImportantDates{
     private ImportantDatesTypes dateType;
 
     @Column(nullable = false)
+    @Min(1)
+    @Max(13)
     private int hebrewMonth;
 
     @Column(nullable = false)
+    @Min(1)
+    @Max(30)
     private int dayInMonth;
 
     PrayerImportantDates(){}

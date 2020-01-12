@@ -1,28 +1,28 @@
-package org.mm.thoracalling;
+// package org.mm.thoracalling;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+// import org.springframework.boot.CommandLineRunner;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Profile;
+// import org.springframework.stereotype.Component;
 
-@Component
-@Profile("!test")
-class DbManaging {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+// @Component
+// @Profile("!test")
+// class DbManaging {
+//     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Bean
-    CommandLineRunner initDb (PrayerRepository prayerRepository, 
-                              PrayerImportantDatesRepository prayerImportantDatesRepository){
-        return args -> {
-            logger.info("Preloading: " + prayerRepository.save(new Prayer("MosheMalin","משה מלין")));
-            logger.info("Preloading: " + prayerRepository.save(new Prayer("NissimDerdiger","ניסים דרדיגר")));
+//     @Bean
+//     CommandLineRunner initDb (PrayerRepository prayerRepository, 
+//                               PrayerImportantDatesRepository prayerImportantDatesRepository){
+//         return args -> {
+//             logger.info("Preloading: " + prayerRepository.save(new Prayer("MosheMalin","משה מלין")));
+//             logger.info("Preloading: " + prayerRepository.save(new Prayer("NissimDerdiger","ניסים דרדיגר")));
 
-            logger.info("Preloading: " + prayerImportantDatesRepository.save(
-                 new PrayerImportantDates ("MosheMalin",10, 13, ImportantDatesTypes.YAHRZEIHT)));
+//             logger.info("Preloading: " + prayerImportantDatesRepository.save(
+//                  new PrayerImportantDates ("MosheMalin",10, 13, ImportantDatesTypes.YAHRZEIHT)));
 
-        };
-    }
+//         };
+//     }
 
-}
+// }
