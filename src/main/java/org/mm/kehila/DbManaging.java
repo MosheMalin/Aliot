@@ -4,11 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.mm.kehila.common.SimpleHebrewDate;
 import org.mm.kehila.congregant.Congregant;
 import org.mm.kehila.congregant.CongregantRepository;
 import org.mm.kehila.congreganttofamily.CongregantToFamily;
 import org.mm.kehila.family.Family;
 import org.mm.kehila.family.FamilyRepository;
+import org.mm.kehila.importantdates.DateType;
+import org.mm.kehila.importantdates.ImportantDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -26,16 +29,25 @@ class DbManaging {
             throws ParseException {
         SimpleDateFormat objSDF = new SimpleDateFormat("dd-mm-yyyy");
 
-       
         //list of congregants
         //+ relations between congregants and families
-        Congregant mosheMalin = new Congregant("Moshe", "Malin", "0000", "moshemalin@gmail.com",objSDF.parse("16-08-1978"),5738,10,16);
-        Congregant anatMalin = new Congregant("Anat", "Malin", "0000", "anatvishne@gmail.com",objSDF.parse("15-04-1981"),5738,10,16);        
-        Congregant zeevVishne = new Congregant("Zeev", "Vishne", "0000", "zeevvishne@gmail.com",objSDF.parse("15-04-1945"),5738,10,16);
-        Congregant gadiVishne = new Congregant("Gadi", "Vishne", "0000", "gadivishne@gmail.com",objSDF.parse("15-04-1975"),5738,10,16);
+        Congregant mosheMalin = new Congregant("Moshe", "Malin", "0000", "moshemalin@gmail.com",objSDF.parse("16-08-1978"), 
+                new SimpleHebrewDate(5738,10,16), new ArrayList<>() );
+        mosheMalin.getImportantDate().add(new ImportantDate(new SimpleHebrewDate(5000,1,1),DateType.other));
+        
+        Congregant anatMalin = new Congregant("Anat", "Malin", "0000", "anatvishne@gmail.com",objSDF.parse("15-04-1981"), 
+                new SimpleHebrewDate(5738,10,16), new ArrayList<>() );        
+        anatMalin.getImportantDate().add(new ImportantDate(new SimpleHebrewDate(5000,1,1),DateType.other));
 
-        Congregant nissimDerdiger =  new Congregant("Nissim","Derdiger","0542222222","nissim@gmail.com",objSDF.parse("16-08-1981"),5741,10,16); 
-        Congregant yehudaZilberfarb =  new Congregant("Yehuda","Zilberfarb","05433333","yehuda@gmail.com",objSDF.parse("16-08-1981"),5741, 10,16); 
+        Congregant zeevVishne = new Congregant("Zeev", "Vishne", "0000", "zeevvishne@gmail.com",objSDF.parse("15-04-1945"), 
+                new SimpleHebrewDate(5738,10,16), new ArrayList<>() );
+        Congregant gadiVishne = new Congregant("Gadi", "Vishne", "0000", "gadivishne@gmail.com",objSDF.parse("15-04-1975"), 
+                new SimpleHebrewDate(5738,10,16), new ArrayList<>() );
+
+        Congregant nissimDerdiger =  new Congregant("Nissim","Derdiger","0542222222","nissim@gmail.com",objSDF.parse("16-08-1981"), 
+                new SimpleHebrewDate(5741,10,16), new ArrayList<>() ); 
+        Congregant yehudaZilberfarb =  new Congregant("Yehuda","Zilberfarb","05433333","yehuda@gmail.com",objSDF.parse("16-08-1981"), 
+                new SimpleHebrewDate(5741, 10,16), new ArrayList<>()); 
 
         //congrenants
         logger.info("Preloading: " + congregantRepository.save (mosheMalin)); 

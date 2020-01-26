@@ -1,14 +1,10 @@
 package org.mm.kehila.family;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.Singular;
-import lombok.EqualsAndHashCode.Exclude;
 
 import java.util.ArrayList;
 import java.util.List;

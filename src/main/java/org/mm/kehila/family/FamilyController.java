@@ -39,7 +39,7 @@ public class FamilyController{
         return res;
     }
 
-    @GetMapping("/families/{id}")
+    @GetMapping("/families/id/{id}")
     Family getById (@PathVariable Long id){
         return familyService.getById(id).orElseThrow(()->new CongregantNotFoundException(id.toString()));
     }

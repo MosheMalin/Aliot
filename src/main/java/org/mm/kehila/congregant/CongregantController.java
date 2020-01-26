@@ -39,7 +39,7 @@ public class CongregantController{
         return res;
     }
 
-    @GetMapping("/congregants/{id}")
+    @GetMapping("/congregants/id/{id}")
     Congregant getById (@PathVariable Long id){
         return congregantService.getById(id).orElseThrow(()->new CongregantNotFoundException(id.toString()));
     }
