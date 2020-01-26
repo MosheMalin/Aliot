@@ -28,7 +28,7 @@ public class CongregantService {
 
     List<Congregant> getCongregantByLastame(String lastname)
     {
-        List<Congregant> res = congregantRepository.findByLastname(lastname);
+        List<Congregant> res = congregantRepository.findByLastnameIgnoreCase(lastname);
         if (res.size() >1)
         {
             logger.warn("multiple results with the same name [" + lastname + "].");;

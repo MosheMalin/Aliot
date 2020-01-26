@@ -10,12 +10,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+/*
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedAttributeNode;
+*/
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
-import org.mm.kehila.FamilyPosition;
 import org.mm.kehila.common.*;
 
 @Data
@@ -25,33 +30,69 @@ import org.mm.kehila.common.*;
 @Setter
 @Entity(name = "Congregant")
 @Table (name="congregant")
-public class Congregant extends BaseEntity {
+/*
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="fullItem", attributeNodes = {
+            @NamedAttributeNode("id"),
+            @NamedAttributeNode("firstname"),
+            @NamedAttributeNode("lastname"),
+            @NamedAttributeNode("phone"),
+            @NamedAttributeNode("email"),
+            @NamedAttributeNode("calendricBirthDate"),
+            @NamedAttributeNode("hebrewBirthYear"),
+            @NamedAttributeNode("hebrewBirthMonth"),
+            @NamedAttributeNode("hebrewBirthDay")
+    }),
+    @NamedEntityGraph(name="baseItem", attributeNodes = {
+        @NamedAttributeNode("id"),
+        @NamedAttributeNode("firstname"),
+        @NamedAttributeNode("lastname")
+    })
+})
+*/
+public class Congregant extends BaseEntity{
+
+/*
+    public Congregant (String firstName, String lastName, String phone, String email, 
+                        Date birthdate, Integer hebBirthYear, Integer hebBirthMonth, Integer hebBirthDay){
+        this.firstname = firstName;
+        this.lastname = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.calendricBirthDate = birthdate;
+        this.hebrewBirthYear = hebBirthYear;
+        this.hebrewBirthMonth = hebBirthMonth;
+        this.hebrewBirthDay = hebBirthDay;
+        
+    }
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    private Long id;
+*/
+    @Column(nullable = false)
+    private String firstname;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    FamilyPosition position;
+    private String lastname;
 
-    @Column(nullable = false)
-    String firstname;
+    @Column
+    private String phone;
 
-    @Column(nullable = false)
-    String lastname;
-
-    String phone;
-
+    @Column
     @Email
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    Date calendricBirthDate;
+    private Date calendricBirthDate;
 
     @Column(nullable = false)
-    Integer hebrewBirthYear;
+    private Integer hebrewBirthYear;
 
     @Column(nullable = false)
-    Integer hHebrewBirthMonth;
+    private Integer hebrewBirthMonth;
 
     @Column(nullable = false)
-    Integer hebrewBirthDay;
+    private Integer hebrewBirthDay;
 
 }

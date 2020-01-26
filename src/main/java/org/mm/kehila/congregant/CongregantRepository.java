@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CongregantRepository extends JpaRepository<Congregant,Long>{
-    List<Congregant> findByLastname (String lastname);
+    List<Congregant> findAll ();
+    List<Congregant> findByLastnameIgnoreCase (String lastname);
     Optional<Congregant> findById(Long id);
 }
