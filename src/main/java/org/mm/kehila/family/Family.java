@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,8 +25,8 @@ import org.mm.kehila.congreganttofamily.CongregantToFamily;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "CongregantsFamily")
-@Table (name="congregants_family")
+@Entity(name = "Family")
+@Table (name="family")
 public class Family extends BaseEntity {
 
     public Family(String lastName, String homAddress){

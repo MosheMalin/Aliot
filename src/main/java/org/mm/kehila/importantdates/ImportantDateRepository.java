@@ -10,6 +10,7 @@ import org.mm.kehila.common.SimpleHebrewDate;
 
 @Repository
 public interface ImportantDateRepository extends JpaRepository<ImportantDate,Long>{
-    List<ImportantDate> findByHebDateHebrewMonth (Integer hebrewMonth);
+    List<ImportantDate> findByHebDateHebrewMonthAndHebDateHebrewDay (int hebrewMonth, int hebrewDay);
+    List<ImportantDate> findByHebDateHebrewMonth (int hebrewMonth);
     Optional<ImportantDate> findById(Long id);
 }

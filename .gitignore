@@ -10,3 +10,4 @@ target/test-classes/*
 .vscode/launch.json
 logs/*
 .vscode/settings.json
+test.trace.db

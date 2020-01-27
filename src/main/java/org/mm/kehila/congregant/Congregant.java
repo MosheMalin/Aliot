@@ -25,7 +25,10 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedAttributeNode;
 */
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.mm.kehila.common.*;
 import org.mm.kehila.importantdates.ImportantDate;
@@ -38,46 +41,20 @@ import org.mm.kehila.importantdates.ImportantDate;
 @Setter
 @Entity(name = "Congregant")
 @Table (name="congregant")
-/*
-@NamedEntityGraphs({
-    @NamedEntityGraph(name="fullItem", attributeNodes = {
-            @NamedAttributeNode("id"),
-            @NamedAttributeNode("firstname"),
-            @NamedAttributeNode("lastname"),
-            @NamedAttributeNode("phone"),
-            @NamedAttributeNode("email"),
-            @NamedAttributeNode("calendricBirthDate"),
-            @NamedAttributeNode("hebrewBirthYear"),
-            @NamedAttributeNode("hebrewBirthMonth"),
-            @NamedAttributeNode("hebrewBirthDay")
-    }),
-    @NamedEntityGraph(name="baseItem", attributeNodes = {
-        @NamedAttributeNode("id"),
-        @NamedAttributeNode("firstname"),
-        @NamedAttributeNode("lastname")
-    })
-})
-*/
+
 public class Congregant extends BaseEntity{
 
-/*
+
     public Congregant (String firstName, String lastName, String phone, String email, 
-                        Date birthdate, Integer hebBirthYear, Integer hebBirthMonth, Integer hebBirthDay){
+                        Date birthdate, SimpleHebrewDate hebDate ){
         this.firstname = firstName;
         this.lastname = lastName;
         this.phone = phone;
         this.email = email;
         this.calendricBirthDate = birthdate;
-        this.hebrewBirthYear = hebBirthYear;
-        this.hebrewBirthMonth = hebBirthMonth;
-        this.hebrewBirthDay = hebBirthDay;
-        
+        this.hebrewBirthDate = hebDate;
     }
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    private Long id;
-*/
     @Column(nullable = false)
     private String firstname;
 
@@ -95,19 +72,22 @@ public class Congregant extends BaseEntity{
     private Date calendricBirthDate;
 
     @Embedded
+    @Valid
     private SimpleHebrewDate hebrewBirthDate;
 
-    @OneToMany (cascade = CascadeType.ALL)
-    List<ImportantDate> ImportantDate = new ArrayList<>();
+    @OneToMany (cascade = CascadeType.ALL,  mappedBy = "congregant")
+    //exclude to avoid infinete loop
+    @JsonIgnoreProperties ("congregant")
+    List<ImportantDate> importantDates = new ArrayList<>();
 
-    /*
-    @Column(nullable = false)
-    private Integer hebrewBirthYear;
+    public void addImportantDate(ImportantDate importantDate){
+        importantDates.add(importantDate);
+        importantDate.setCongregant(this);
+    }
 
-    @Column(nullable = false)
-    private Integer hebrewBirthMonth;
+    public void removeImportantDate(ImportantDate importantDate){
+        importantDates.remove(importantDate);
+        importantDate.setCongregant(null);
+    }
 
-    @Column(nullable = false)
-    private Integer hebrewBirthDay;
-*/
 }

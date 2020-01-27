@@ -26,9 +26,19 @@ public class ImportantDateService {
         return importantdateRepository.findById(id);
     }
 
-    List<ImportantDate> getImportantDateByHebMonth(Integer hebMonth)
+    List<ImportantDate> getImportantDateByHebMonth(int hebMonth)
     {
         List<ImportantDate> res = importantdateRepository.findByHebDateHebrewMonth(hebMonth);
+        if (res.size() >1)
+        {
+            logger.warn("multiple results in month [" + hebMonth + "].");;
+        }
+        return res;
+    }
+
+    List<ImportantDate> getImportantDateByHebMonthAndByDay(int hebMonth, int hebDay)
+    {
+        List<ImportantDate> res = importantdateRepository.findByHebDateHebrewMonthAndHebDateHebrewDay(hebMonth, hebDay);
         if (res.size() >1)
         {
             logger.warn("multiple results in month [" + hebMonth + "].");;

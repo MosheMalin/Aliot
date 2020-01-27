@@ -31,8 +31,17 @@ public class ImportantDateController{
     }
 
     @GetMapping("/importantdates/month/{hebMonth}")
-    List<ImportantDate> getByName (@PathVariable Integer hebMonth){
+    List<ImportantDate> getByMonth (@PathVariable Integer hebMonth){
         List<ImportantDate> res = importantdateService.getImportantDateByHebMonth(hebMonth);
+        if (res==null || res.isEmpty()){
+            throw new CongregantNotFoundException(hebMonth.toString());
+        }
+        return res;
+    }
+
+    @GetMapping("/importantdates/month/{hebMonth}/day/{hebDay}")
+    List<ImportantDate> getByMonthAndByDay (@PathVariable Integer hebMonth, @PathVariable Integer hebDay){
+        List<ImportantDate> res = importantdateService.getImportantDateByHebMonthAndByDay(hebMonth, hebDay);
         if (res==null || res.isEmpty()){
             throw new CongregantNotFoundException(hebMonth.toString());
         }
